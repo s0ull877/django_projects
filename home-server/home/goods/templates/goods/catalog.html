@@ -42,31 +42,29 @@
             </form>
         </div>
         <!-- Карта товара -->
-        
-        <div class="col-lg-4 col-md-6 p-4">
-            <div class="card border-primary rounded custom-shadow">
-                <img src="../deps/images/goods/set of tea table and three chairs.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <a href="../goods/product.html">
-                        <p class="card-title">Чайный столик и три стула</p>
-                    </a>
-                    <p class="card-text text-truncate">Комплект из трёх стульев и дизайнерский столик для гостинной комнаты.</p>
-                    <p class="product_id">id: 02265</p>
-                    <div class="d-flex justify-content-between">
-                        <p><s>100</s> $</p>
-                        <p><strong>90.00 $</strong></p>
-                        <span class="badge bg-warning text-dark">Скидка 10.00 %</span>
-                        <!-- <p><strong>100.00 $</strong></p> -->
-                        <a href="#" class="btn add-to-cart">
-                            <img class="mx-1" src="../deps/icons/cart-plus.svg" alt="Catalog Icon"
-                                width="32" height="32">
+        {% for product in goods %}
+            <div class="col-lg-4 col-md-6 p-4">
+                <div class="card border-primary rounded custom-shadow">
+                    <img src="{% static product.image %}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <a href="{% url "goods:product" %}">
+                            <p class="card-title">{{ product.name }}</p>
                         </a>
+                        <p class="card-text text-truncate">{{ product.description }}</p>
+                        <p class="product_id">id: 02265</p>
+                        <div class="d-flex justify-content-between">
+                            {% comment %} <p><s>{{ product.price }}</s> $</p> {% endcomment %}
+                            <p><strong>{{ product.price }} $</strong></p>
+                            {% comment %} <span class="badge bg-warning text-dark">Скидка 10.00 %</span> {% endcomment %}
+                            <a href="#" class="btn add-to-cart">
+                                <img class="mx-1" src="{% static '/deps/icons/cart-plus.svg'%}" alt="Catalog Icon"
+                                    width="32" height="32">
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-    </div>
+        {% endfor %}
     <!-- Пагинация -->
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center my-4">
