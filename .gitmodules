@@ -1,0 +1,3 @@
+[submodule "strore-server/store"]
+	path = strore-server/store
+	url = https://github.com/s0ull877/django_project.git
