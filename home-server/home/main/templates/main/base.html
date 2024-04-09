@@ -58,7 +58,7 @@
                                     <li><a class="dropdown-item  text-white" href="users/profile.html">Личный кабинет</a>
                                     </li>
                                     {% if user.is_staff %}
-                                    <li><a class="dropdown-item  text-white" href="#">Админ панель</a></li>
+                                    <li><a class="dropdown-item  text-white" href="{% url "admin:index" %}">Админ панель</a></li>
                                     <li>
                                     {% endif %}
                                         <hr class="dropdown-divider">
