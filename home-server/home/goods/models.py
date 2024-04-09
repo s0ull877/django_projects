@@ -24,9 +24,14 @@ class Products(models.Model):
     price = models.DecimalField(default=0.00, max_digits=7, decimal_places=2)
     discount = models.DecimalField(default=0.00, max_digits=7, decimal_places=2)
     quantity = models.PositiveIntegerField(default=0)
-    category = models.ManyToManyField(to=Categories, default=4)
+    category = models.ManyToManyField(to=Categories, default=[4])
 
     class Meta:
         db_table = 'product'
         verbose_name = 'product'
         verbose_name_plural = 'products'
+
+
+        def __str__(self) -> str:
+
+            return f'{self.name}| {self.quantity}'
