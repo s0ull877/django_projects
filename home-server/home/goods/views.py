@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+
 
 from common.views import TitleMixin, CategoriesMixin
 
@@ -23,8 +25,15 @@ class ProductsListView(TitleMixin, CategoriesMixin, ListView):
     
 
 
+class ProductDetailView(TitleMixin, CategoriesMixin, DetailView):
+
+    model = Products
+    template_name = "goods/product.html"
+    title = 'Home - Продукт'
+
+
+    
 
 
 
-def product(request):
-    return render(request, 'goods/product.html')
+
