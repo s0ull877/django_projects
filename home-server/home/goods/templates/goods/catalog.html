@@ -1,5 +1,6 @@
 {% extends "main/base.html" %}
 {% load static %}
+{% load humanize %}
 
 
 {% block content %}
@@ -42,20 +43,24 @@
             </form>
         </div>
         <!-- Карта товара -->
-        {% for product in goods %}
+        {% for product in products %}
             <div class="col-lg-4 col-md-6 p-4">
                 <div class="card border-primary rounded custom-shadow">
-                    <img src="{% static product.image %}" class="card-img-top" alt="...">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <a href="{% url "goods:product" %}">
                             <p class="card-title">{{ product.name }}</p>
                         </a>
                         <p class="card-text text-truncate">{{ product.description }}</p>
-                        <p class="product_id">id: 02265</p>
+                        <p class="product_id">id: {{ product.id }}</p>
                         <div class="d-flex justify-content-between">
-                            {% comment %} <p><s>{{ product.price }}</s> $</p> {% endcomment %}
-                            <p><strong>{{ product.price }} $</strong></p>
-                            {% comment %} <span class="badge bg-warning text-dark">Скидка 10.00 %</span> {% endcomment %}
+                            {% if product.discount %}
+                                <p><s>{{ product.price| intcomma }}</s> $</p>
+                                <p><strong>{{ product.with_discount }} $</strong></p>
+                                <span class="badge bg-warning text-dark">Скидка {{ product.discount| intcomma }} %</span>
+                            {% else %}
+                                <p><strong>{{ product.price| intcomma }} $</strong></p>
+                            {% endif %}
                             <a href="#" class="btn add-to-cart">
                                 <img class="mx-1" src="{% static '/deps/icons/cart-plus.svg'%}" alt="Catalog Icon"
                                     width="32" height="32">
