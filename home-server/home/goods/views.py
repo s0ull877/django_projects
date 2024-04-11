@@ -14,7 +14,7 @@ class ProductsListView(TitleMixin, CategoriesMixin, ListView):
     model = Products
     template_name = "goods/catalog.html"
     title = 'Home - Каталог'
-    paginate_by = 6
+    paginate_by = 3
 
 
     def get_context_data(self, **kwargs) -> dict:
@@ -25,7 +25,7 @@ class ProductsListView(TitleMixin, CategoriesMixin, ListView):
     
     def get_queryset(self):
 
-        queryset = super().get_queryset()\
+        queryset = super().get_queryset()
         
         slug = self.kwargs['slug']
         products = Categories.objects.get(slug=slug).products_set.all().order_by('id')
