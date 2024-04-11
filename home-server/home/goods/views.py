@@ -6,6 +6,7 @@ from django.views.generic.detail import DetailView
 from common.views import TitleMixin
 
 from goods.models import Products, Categories
+from goods.utils import q_search
 
 
 
@@ -27,15 +28,29 @@ class ProductsListView(TitleMixin, ListView):
 
         queryset = super().get_queryset()
         
-        slug = self.kwargs['slug']
-        products = Categories.objects.get(slug=slug).products_set.all().order_by('id')
+        slug = self.kwargs.get('slug')
+        if slug:
+            try:
+                products = Categories.objects.get(slug=slug).products_set.all()
+            except Categories.DoesNotExist:
+                return Products.objects.none()
+        else:
+            products = Categories.objects.get(slug='all').products_set.all()
+
         
         params = self.request.GET
+        query = params.get('q')
+        if query:
+            products = q_search(query)
+
         if params.get('on_sale'):
             products = products.filter(discount__gt=0)
 
         if params.get('order_by'):
             products = products.order_by(params.get('order_by'))
+        else:
+            products = products.order_by('id')
+
 
         return products
     

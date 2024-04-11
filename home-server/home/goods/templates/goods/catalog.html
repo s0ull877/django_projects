@@ -6,6 +6,7 @@
 {% load query_transform  %}
 
 
+
 {% block content %}
     <div class="row">
         <!-- Форма фильтров -->
@@ -15,9 +16,13 @@
                 Фильтры
             </button>
     
-            <form action="{% url "goods:catalog" slug=view.kwargs.slug  %}" method="get" class="dropdown-menu bg-dark" data-bs-theme="dark">
+            <form action="{% if request.GET.q or not view.kwargs.slug %}{% url "goods:search" %}{% else %}{% url "goods:catalog" slug=view.kwargs.slug  %}{% endif %}" 
+                method="get" class="dropdown-menu bg-dark" data-bs-theme="dark">
                 <div class="form-check text-white mx-3">
                     <input class="form-check-input" type="checkbox" name="on_sale" id="flexCheckDefault" value="on">
+                    {% if request.GET.q %}
+                        <input type="hidden" name="q" value="{{ request.GET.q }}">
+                    {% endif %}
                     <label class="form-check-label" for="flexCheckDefault">
                         Товары по акции
                     </label>
