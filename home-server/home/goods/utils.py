@@ -7,7 +7,7 @@ def q_search(query:str):
     if query.isdigit() and len(query) <= 5:
         return Products.objects.filter(id=int(query))
     
-    keyword = [word for word in query if len(word) > 2]
+    keyword = [word for word in query.split() if len(word) > 2]
 
     q_obj = Q()
 
@@ -15,7 +15,6 @@ def q_search(query:str):
 
         q_obj |= Q(description__icontains=token)
         q_obj |= Q(name__icontains=token)
-
 
 
     return Products.objects.filter(q_obj)

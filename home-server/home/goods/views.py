@@ -15,7 +15,7 @@ class ProductsListView(TitleMixin, ListView):
     model = Products
     template_name = "goods/catalog.html"
     title = 'Home - Каталог'
-    paginate_by = 3
+    paginate_by = 6
 
 
     def get_context_data(self, **kwargs) -> dict:
