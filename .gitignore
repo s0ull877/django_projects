@@ -7,3 +7,5 @@
 **/static
 
 **/.vscode
+
+.gitmodules
