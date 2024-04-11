@@ -1,5 +1,3 @@
-from goods.models import Categories
-
 class TitleMixin:
     title = None
 
@@ -9,10 +7,4 @@ class TitleMixin:
         return context
 
 
-class CategoriesMixin:
-
-    def get_context_data(self, **kwargs) -> dict:
-        context = super().get_context_data(**kwargs)
-        context["categories"] = Categories.objects.all()
-        return context
     

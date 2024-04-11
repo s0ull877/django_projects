@@ -3,13 +3,13 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
 
-from common.views import TitleMixin, CategoriesMixin
+from common.views import TitleMixin
 
 from goods.models import Products, Categories
 
 
 
-class ProductsListView(TitleMixin, CategoriesMixin, ListView):
+class ProductsListView(TitleMixin, ListView):
 
     model = Products
     template_name = "goods/catalog.html"
@@ -41,7 +41,7 @@ class ProductsListView(TitleMixin, CategoriesMixin, ListView):
     
 
 
-class ProductDetailView(TitleMixin, CategoriesMixin, DetailView):
+class ProductDetailView(TitleMixin, DetailView):
 
     model = Products
     template_name = "goods/product.html"
