@@ -53,9 +53,71 @@ class UserLoginForm(AuthenticationForm):
 
 class UserProfileForm(UserChangeForm):
 
-    # image = forms.ImageField(widget=forms.FileInput(attrs=))
+    image = forms.ImageField(widget=forms.FileInput(attrs={
+        'class': "form-control mt-3",
+        'accept': "image/*"
+    }), required=False)
+
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+    }))
+
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+    }))
+
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'readonly': True
+    }))
+
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'readonly': True
+    }))
+
+
+    class Meta:
+
+        model = User
+        fields = ('image','first_name','last_name','username','email')
+
+
+
+class UserRegistrationForm(UserCreationForm):
+
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Введите ваше имя',
+    }))
+
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Введите вашу фамилию',
+    }))
 
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control',
         'placeholder': 'Введите ваше имя пользователя',
     }))
+
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Введите ваш адрес эл. почты',
+    }))
+
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Введите ваш пароль',
+    }))
+
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Повторите пароль',
+    }))
+
+
+    class Meta:
+
+        model = User
+        fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
