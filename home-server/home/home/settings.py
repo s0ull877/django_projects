@@ -60,8 +60,9 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.postgres',
 
-    'main',
+    'users',
     'goods',
+    'main',
 ]
 
 MIDDLEWARE = [
