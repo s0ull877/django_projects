@@ -1,4 +1,4 @@
-from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, SearchHeadline
 
 from goods.models import Products
 
@@ -12,7 +12,26 @@ def q_search(query:str):
     vector = SearchVector("name", "description")
     query = SearchQuery(query)
     
-    return Products.objects.annotate(rank=SearchRank(vector, query)).order_by('-rank')
+    products = Products.objects.annotate(rank=SearchRank(vector, query)).filter(rank__gt=0).order_by('-rank')
+
+    products = products.annotate(
+        headline=SearchHeadline(
+            "name", query, 
+            start_sel='<span style="background-color: yellow;">',
+            stop_sel="</span>",
+            ),
+        )
+
+    products = products.annotate(
+        bodyline=SearchHeadline(
+            "description",
+            query,
+            start_sel='<span style="background-color: yellow;">',
+            stop_sel="</span>",
+        )
+    )
+    
+    return products
 
 
 # my search

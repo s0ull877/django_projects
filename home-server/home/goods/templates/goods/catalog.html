@@ -1,12 +1,11 @@
-{% extends "main/base.html" %}
+{% extends "base.html" %}
 
 
 {% load static %}
 {% load humanize %}
 {% load query_transform  %}
 
-{% block css %}
-{% endblock css %}
+{% block css %}{% endblock css %}
 
 {% block content %}
     <div class="row">
@@ -52,14 +51,34 @@
         </div>
         <!-- Карта товара -->
         {% for product in page_obj %}
+
             <div class="col-lg-4 col-md-6 p-4">
                 <div class="card border-primary rounded custom-shadow">
                     <img src="{{ product.image.url }}" class="card-img-top" alt="...">
                     <div class="card-body">
+
                         <a href="{% url "goods:product" product.id %}">
-                            <p class="card-title">{{ product.name }}</p>
+                            {% autoescape off %}
+                                <p class="card-title">
+                                    {% if product.headline %}
+                                    {{ product.headline }}
+                                    {% else %}
+                                    {{ product.name }}
+                                    {% endif %}
+                                </p>
+                            {% endautoescape %}
                         </a>
-                        <p class="card-text text-truncate">{{ product.description }}</p>
+
+                        {% autoescape off %}
+                            <p class="card-text text-truncate">
+                                {% if product.bodyline %}
+                                    {{ product.bodyline| truncatechars:120 }}
+                                {% else %}
+                                    {{ product.description| truncatechars:35 }}
+                                {% endif %}
+                            </p>
+                        {% endautoescape %}
+
                         <p class="product_id">id: {{ product.display_id }}</p>
                         <div class="d-flex justify-content-between">
                             {% if product.discount %}
@@ -77,6 +96,7 @@
                     </div>
                 </div>
             </div>
+
         {% endfor %}
     <!-- Пагинация -->
     <nav aria-label="Page navigation example">
@@ -84,7 +104,7 @@
             
             {% if page_obj %}
                 <div class="custom-shadow d-flex">
-
+                    
                     {% if page_obj.has_previous %} 
                 
                         <li class="page-item ">
@@ -116,10 +136,12 @@
                     {% endif %}
                 
                 </div>
+
             {% else %}
-                    <div class="custom-shadow d-flex bg-white">
-                        <p  class="m-2" style="font-size: 1.4rem;" >По запросу <strong>"{{ request.GET.q }}"</strong> ничего не найдено</p>
-                    </div>
+                <link rel="stylesheet" href="{% static 'deps/css/my_footer_css.css'%}">
+                <div class="custom-shadow d-flex bg-white">
+                    <p  class="m-2" style="font-size: 1.4rem;" >По запросу <strong>"{{ request.GET.q }}"</strong> ничего не найдено</p>
+                </div>
             {% endif %}
         </ul>
     </nav>
