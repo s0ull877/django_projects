@@ -10,8 +10,8 @@ from users.models import User
 
 class UserLoginForm(AuthenticationForm):
 
-    username = forms.CharField(widget=forms.TextInput())
-    password = forms.CharField(widget=forms.PasswordInput())
+    username = forms.CharField()
+    password = forms.CharField()
 
 
     error_messages = {
@@ -47,15 +47,15 @@ class UserLoginForm(AuthenticationForm):
 
 class UserProfileForm(UserChangeForm):
 
-    image = forms.ImageField(widget=forms.FileInput())
+    image = forms.ImageField()
 
-    first_name = forms.CharField(widget=forms.TextInput())
+    first_name = forms.CharField()
 
-    last_name = forms.CharField(widget=forms.TextInput())
+    last_name = forms.CharField()
 
-    username = forms.CharField(widget=forms.TextInput(), required=False)
+    username = forms.CharField(required=False)
 
-    email = forms.EmailField(widget=forms.EmailInput(), required=False)
+    email = forms.EmailField(required=False)
 
 
     class Meta:
@@ -67,17 +67,17 @@ class UserProfileForm(UserChangeForm):
 
 class UserRegistrationForm(UserCreationForm):
 
-    first_name = forms.CharField(widget=forms.TextInput())
+    first_name = forms.CharField()
 
-    last_name = forms.CharField(widget=forms.TextInput())
+    last_name = forms.CharField()
 
-    username = forms.CharField(widget=forms.TextInput())
+    username = forms.CharField()
 
-    email = forms.EmailField(widget=forms.EmailInput())
+    email = forms.EmailField()
 
-    password1 = forms.CharField(widget=forms.PasswordInput())
+    password1 = forms.CharField()
 
-    password2 = forms.CharField(widget=forms.PasswordInput())
+    password2 = forms.CharField()
 
 
     class Meta:
