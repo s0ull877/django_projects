@@ -18,10 +18,10 @@
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-12 mb-3 text-center">
-                                    <img src="{% if user.image %} {{ user.image.url }} {% else %} {% static '/deps/images/baseavatar.jpg' %} {% endif %}"
-                                        alt="Аватар пользователя" class="img-fluid rounded-circle"
-                                        style="max-width: 150px;">
-                                    {{ form.image }}
+                                    <img src="{% if user.image %}{{ user.image.url }}{% else %}{% static '/deps/images/baseavatar.jpg' %}{% endif %}"
+                                        alt="Аватар пользователя" class="img-fluid rounded-circle" style="max-width: 150px;">
+                                        <input type="file" class="form-control mt-3" name="image" id="id_image"
+                                        accept="image/*">
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label for="id_first_name" class="form-label">Имя*</label>

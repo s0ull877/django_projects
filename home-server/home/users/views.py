@@ -1,3 +1,4 @@
+from django.http import HttpResponseBadRequest
 from django.views.generic.edit import CreateView, UpdateView
 
 from django.contrib.auth.views import LoginView
@@ -29,6 +30,24 @@ class UserProfileView(TitleMixin, UpdateView):
     def get_success_url(self):
 
         return reverse_lazy('users:profile', args=(self.object.id,))
+    
+    def get(self, request, *args, **kwargs):
+
+        self.object = self.get_object()
+        if request.user == self.object:
+            return super().get(request, *args, **kwargs)
+        else:
+            return HttpResponseBadRequest(status=404)
+        
+    def post(self, request, *args, **kwargs):
+        
+        self.object = self.get_object()
+        if request.user == self.object:
+            return super().post(request, *args, **kwargs)
+        else:
+            return HttpResponseBadRequest(status=404)
+    
+
     
 
     
