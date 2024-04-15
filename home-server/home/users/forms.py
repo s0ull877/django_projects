@@ -10,14 +10,8 @@ from users.models import User
 
 class UserLoginForm(AuthenticationForm):
 
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Введите ваше имя пользователя',
-    }))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Введите ваш пароль',
-    }))
+    username = forms.CharField(widget=forms.TextInput())
+    password = forms.CharField(widget=forms.PasswordInput())
 
 
     error_messages = {
@@ -53,68 +47,37 @@ class UserLoginForm(AuthenticationForm):
 
 class UserProfileForm(UserChangeForm):
 
-    image = forms.ImageField(widget=forms.FileInput(attrs={
-        'class': "form-control mt-3",
-        'accept': "image/*"
-    }), required=False)
+    image = forms.ImageField(widget=forms.FileInput())
 
-    first_name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control',
-    }))
+    first_name = forms.CharField(widget=forms.TextInput())
 
-    last_name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control',
-    }))
+    last_name = forms.CharField(widget=forms.TextInput())
 
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'readonly': True
-    }))
+    username = forms.CharField(widget=forms.TextInput(), required=False)
 
-    email = forms.EmailField(widget=forms.EmailInput(attrs={
-        'class': 'form-control',
-        'readonly': True
-    }))
+    email = forms.EmailField(widget=forms.EmailInput(), required=False)
 
 
     class Meta:
 
         model = User
-        fields = ('image','first_name','last_name','username','email')
+        fields = ('image','first_name','last_name')
 
 
 
 class UserRegistrationForm(UserCreationForm):
 
-    first_name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Введите ваше имя',
-    }))
+    first_name = forms.CharField(widget=forms.TextInput())
 
-    last_name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Введите вашу фамилию',
-    }))
+    last_name = forms.CharField(widget=forms.TextInput())
 
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Введите ваше имя пользователя',
-    }))
+    username = forms.CharField(widget=forms.TextInput())
 
-    email = forms.EmailField(widget=forms.EmailInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Введите ваш адрес эл. почты',
-    }))
+    email = forms.EmailField(widget=forms.EmailInput())
 
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Введите ваш пароль',
-    }))
+    password1 = forms.CharField(widget=forms.PasswordInput())
 
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Повторите пароль',
-    }))
+    password2 = forms.CharField(widget=forms.PasswordInput())
 
 
     class Meta:

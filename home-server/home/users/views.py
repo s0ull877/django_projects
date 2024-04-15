@@ -30,9 +30,7 @@ class UserProfileView(TitleMixin, UpdateView):
 
         return reverse_lazy('users:profile', args=(self.object.id,))
     
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        return super().post(request, *args, **kwargs)
+
     
 
 class UserRegistrationView(SuccessMessageMixin, TitleMixin, CreateView):

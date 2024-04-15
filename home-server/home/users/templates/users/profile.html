@@ -24,20 +24,24 @@
                                     {{ form.image }}
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <label for="{{ form.first_name.id_for_label }}" class="form-label">Имя*</label>
-                                    {{ form.first_name }}
+                                    <label for="id_first_name" class="form-label">Имя*</label>
+                                    <input type="text" class="form-control" name='first_name' id="id_first_name"
+                                    placeholder="Введите ваше имя" value="{% if user.first_name %}{{user.first_name}}{% else %}{% endif %}">
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <label for="{{ form.last_name.id_for_label }}" class="form-label">Фамилия*</label>
-                                    {{ form.last_name }}
+                                    <label for="id_last_name" class="form-label">Фамилия*</label>
+                                    <input type="text" class="form-control" name="last_name" id="id_last_name"
+                                    placeholder="Введите вашу фамилию" value="{% if user.last_name %}{{user.last_name}}{% else %}{% endif %}">
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <label for="{{ form.username.id_for_label }}" class="form-label">Имя пользователя*</label>
-                                    {{ form.username }}
+                                    <label for="id_username" class="form-label">Имя пользователя*</label>
+                                    <input type="text" class="form-control" name="username" id="id_username"
+                                    placeholder="Ваше имя пользователя" value="{{user.username}}" disabled> 
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <label for="{{ form.email.id_for_label }}" class="form-label">Email*</label>
-                                    {{ form.email }}
+                                    <label for="id_email" class="form-label">Email*</label>
+                                    <input type="email" class="form-control" name="email" id="id_email"
+                                    placeholder="Введите ваш email *youremail@example.com" value="{{ user.email }}" disabled>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-dark">Сохранить</button>
