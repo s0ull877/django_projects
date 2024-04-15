@@ -26,12 +26,12 @@
                                 <div class="col-md-12 mb-3">
                                     <label for="id_first_name" class="form-label">Имя*</label>
                                     <input type="text" class="form-control" name='first_name' id="id_first_name"
-                                    placeholder="Введите ваше имя" value="{% if user.first_name %}{{user.first_name}}{% else %}{% endif %}">
+                                    placeholder="Введите ваше имя" value="{% if user.first_name %}{{ user.first_name }}{% endif %}">
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label for="id_last_name" class="form-label">Фамилия*</label>
                                     <input type="text" class="form-control" name="last_name" id="id_last_name"
-                                    placeholder="Введите вашу фамилию" value="{% if user.last_name %}{{user.last_name}}{% else %}{% endif %}">
+                                    placeholder="Введите вашу фамилию" value="{% if user.last_name %}{{ user.last_name }}{% endif %}">
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label for="id_username" class="form-label">Имя пользователя*</label>
