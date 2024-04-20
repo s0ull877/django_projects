@@ -65,4 +65,24 @@ def basket_delete_item(request):
 
 
 def basket_change(request):
-    pass
+    
+    cart_id = request.POST.get('cart_id')
+    quantity = request.POST.get('quantity')
+
+    cart = HomeCart.objects.get(id=cart_id)
+
+    cart.quantity = quantity
+    cart.save()
+
+    user_carts = get_user_carts(request)
+    cart_items_html = render_to_string(
+        'carts\includes\included_cart.html', {'carts': user_carts}, request=request
+    )
+
+    response_data = {
+        'message': 'Количество изменено',
+        'cart_items_html': cart_items_html,
+        'quantity': quantity
+    }
+
+    return JsonResponse(response_data)
