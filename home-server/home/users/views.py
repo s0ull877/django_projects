@@ -1,4 +1,5 @@
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView
 
 from django.contrib.auth.views import LoginView
@@ -46,9 +47,6 @@ class UserProfileView(TitleMixin, UpdateView):
             return super().post(request, *args, **kwargs)
         else:
             return HttpResponseBadRequest(status=404)
-    
-
-    
 
     
 
@@ -60,4 +58,10 @@ class UserRegistrationView(SuccessMessageMixin, TitleMixin, CreateView):
     title = 'Home - Регистрация'
     success_url = reverse_lazy('users:login')
     success_message = 'Для окончания регистрации, перейдите по ссылке, отправленной вам на почту!'
+
+
+
+def cart_page(request):
+
+    return HttpResponse(render(request, 'carts/user_cart.html'))
 

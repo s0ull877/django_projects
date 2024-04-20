@@ -9,7 +9,6 @@
 
 {% block content %}
     <div class="row">
-        <!-- Форма фильтров -->
         <div class="dropdown mb-2">
             <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -49,7 +48,6 @@
                 <button type="submit" class="btn btn-primary mx-3 mt-3">Применить</button>
             </form>
         </div>
-        <!-- Карта товара -->
         {% for product in page_obj %}
 
             <div class="col-lg-4 col-md-6 p-4">
@@ -88,7 +86,7 @@
                             {% else %}
                                 <p><strong>{{ product.price| intcomma }} $</strong></p>
                             {% endif %}
-                            <a href="#" class="btn add-to-cart">
+                            <a href="{% url "carts:add" product_id=product.id %}" class="btn add-to-cart">
                                 <img class="mx-1" src="{% static '/deps/icons/cart-plus.svg'%}" alt="Catalog Icon"
                                     width="32" height="32">
                             </a>
@@ -98,7 +96,6 @@
             </div>
 
         {% endfor %}
-    <!-- Пагинация -->
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center my-4">
             
