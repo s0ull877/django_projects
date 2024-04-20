@@ -63,5 +63,5 @@ class UserRegistrationView(SuccessMessageMixin, TitleMixin, CreateView):
 
 def cart_page(request):
 
-    return HttpResponse(render(request, 'carts/user_cart.html'))
+    return HttpResponse(render(request, 'carts/user_basket.html'))
 

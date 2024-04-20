@@ -1,18 +1,35 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-from django.contrib.auth.decorators import login_required
+
+from carts.models import HomeCart
+from goods.models import Products
 
 
-@login_required
 def basket_add_item(request, product_id):
-    pass
+    
+    product = Products.objects.get(id=product_id)
+
+    if request.user.is_authenticated:
+
+        carts = HomeCart.objects.filter(user=request.user, product=product)
+
+        if carts.exists():
+
+            cart = carts.last()
+            cart.quantity += 1
+            cart.save()
+        
+        else:
+
+            HomeCart.objects.create(user=request.user,product=product)
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
-@login_required
 def basket_delete_item(request, product_id):
     pass
 
 
-@login_required
 def basket_change(request, product_id):
     pass
