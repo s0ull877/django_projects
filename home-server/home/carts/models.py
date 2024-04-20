@@ -34,7 +34,12 @@ class HomeCart(models.Model):
 
 
     def __str__(self):
-        return f'Basket for {self.user.username} | Product id - {self.product.id} | Q - {self.quantity}'
+        
+        if self.user:
+            return f'Basket for {self.user.username} | Product id - {self.product.id} | Q - {self.quantity}'
+    
+        return f'Basket for anonym | Product id - {self.product.id} | Q - {self.quantity}'
+
     
     
     @property

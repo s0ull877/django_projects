@@ -1,5 +1,5 @@
-from unicodedata import category
 from django.db import models
+from django.urls import reverse
 
 class Categories(models.Model):
 
@@ -36,11 +36,16 @@ class Products(models.Model):
 
         return f'{self.name} | Кол-во: {self.quantity}'
     
+
+    def get_absolute_url(self):
+        return reverse("goods:product", kwargs={"pk": self.pk})
+
     
     def with_discount(self):
 
         return round(self.price - (self.price * self.discount) / 100, 2)
     
+
     def display_id(self):
 
         return f'{self.id:05}'
