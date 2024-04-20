@@ -27,8 +27,13 @@ def basket_add_item(request, product_id):
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
-def basket_delete_item(request, product_id):
-    pass
+def basket_delete_item(request, cart_id):
+    
+    cart = HomeCart.objects.get(id=cart_id)
+    cart.delete()
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
 
 
 def basket_change(request, product_id):
