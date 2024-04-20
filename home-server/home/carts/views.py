@@ -15,18 +15,26 @@ def basket_add_item(request):
     product = Products.objects.get(id=product_id)
 
     if request.user.is_authenticated:
-
         carts = HomeCart.objects.filter(user=request.user, product=product)
 
         if carts.exists():
-
             cart = carts.last()
             cart.quantity += 1
             cart.save()
         
         else:
-
             HomeCart.objects.create(user=request.user,product=product)
+
+    else: 
+        carts = HomeCart.objects.filter(session_key=request.session.session_key, product=product)
+
+        if carts.exists():
+            cart = carts.last()
+            cart.quantity += 1
+            cart.save()
+        
+        else:
+            HomeCart.objects.create(session_key=request.session.session_key, product=product)
 
     user_carts = get_user_carts(request)
     cart_items_html = render_to_string(

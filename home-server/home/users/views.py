@@ -1,12 +1,14 @@
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView
 
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
 
 from django.urls import reverse_lazy
 
+from carts.models import HomeCart
 from common.views import TitleMixin
 from users.forms import UserLoginForm, UserProfileForm, UserRegistrationForm
 from users.models import User
@@ -18,6 +20,26 @@ class UserLoginView(TitleMixin, LoginView):
     template_name = "users/login.html"
     form_class = UserLoginForm
     title = 'Home - Авторизация'
+
+    def post(self, request, *args, **kwargs):
+
+        form = self.get_form()
+        if form.is_valid():
+            self.session_key = request.session.session_key
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+        
+
+    def form_valid(self, form):
+        
+        user = form.get_user()
+        auth_login(self.request, user)
+
+        if self.session_key:
+            HomeCart.objects.filter(session_key=self.session_key).update(user=user)
+        
+        return HttpResponseRedirect(self.get_success_url())
 
 
 
