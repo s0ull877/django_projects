@@ -104,16 +104,14 @@
                     </ul>
                 </div>
                 {% block basket %}
-                    {% if carts.total_quantity %}
-                        <div>
-                            <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton"
-                                aria-expanded="false">
-                                <img class="mx-1" src="{% static 'deps/icons/basket2-fill.svg'%}" alt="Catalog Icon" width="24"
-                                    height="24">
-                                <span id="goods-in-cart-count">{{ carts.total_quantity }}</span>
-                            </button>
-                        </div>
-                    {% endif %}
+                    <div>
+                        <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton"
+                            aria-expanded="false">
+                            <img class="mx-1" src="{% static 'deps/icons/basket2-fill.svg'%}" alt="Catalog Icon" width="24"
+                                height="24">
+                            <span id="goods-in-cart-count">{{ carts.total_quantity }}</span>
+                        </button>
+                    </div>
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-scrollable">

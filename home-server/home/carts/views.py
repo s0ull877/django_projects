@@ -44,10 +44,23 @@ def basket_add_item(request):
 
 def basket_delete_item(request):
     
-    cart = HomeCart.objects.first()
+    cart_id = request.POST.get('cart_id')
+    cart = HomeCart.objects.get(id=cart_id)
+    quantity_deleted = cart.quantity
     cart.delete()
 
-    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    user_carts = get_user_carts(request)
+    cart_items_html = render_to_string(
+        'carts\includes\included_cart.html', {'carts': user_carts}, request=request
+    )
+
+    response_data = {
+        'message': 'Товар удален из корзины',
+        'cart_items_html': cart_items_html,
+        'quantity_deleted': quantity_deleted
+    }
+
+    return JsonResponse(response_data)
 
 
 
