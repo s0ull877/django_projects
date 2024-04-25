@@ -1,10 +1,7 @@
 from typing import Any
-from uuid import uuid4
-from datetime import timedelta
 
 from django import forms
 
-from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
 from django.core.exceptions import ValidationError
@@ -12,7 +9,8 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import (AuthenticationForm, UserChangeForm,
                                        UserCreationForm)
 
-from users.models import User, EmailVerification
+from users.models import User
+from users.tasks import send_email_task
 
 
 
@@ -99,8 +97,7 @@ class UserRegistrationForm(UserCreationForm):
     def save(self, commit: bool = ...) -> Any:
 
         user = super().save(commit)
-        expiration = now() + timedelta(minutes=15)
-        email_verification = EmailVerification.objects.create(code=uuid4(), user=user, expiration=expiration)
-        email_verification.send_verification_email()
+
+        send_email_task.delay(user)
     
         return user
