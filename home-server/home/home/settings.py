@@ -19,11 +19,12 @@ import environ
 
 from pathlib import Path
 
-
 env = environ.Env(
 
     DEBUG=(bool),
     SECRET_KEY=(str),
+
+    DOMAIN_NAME=(str),
 
     DATABASE_NAME=(str),
     DATABASE_USER=(str),
@@ -33,6 +34,12 @@ env = environ.Env(
 
     REDIS_HOST=(str),
     REDIS_PORT=(str),
+
+    EMAIL_HOST=(str),
+    EMAIL_PORT=(str),
+    EMAIL_HOST_USER=(str),
+    EMAIL_HOST_PASSWORD=(str),
+    EMAIL_USE_SSL=(bool),
 
 )
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -49,9 +56,9 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['*']
+DOMAIN_NAME = env('DOMAIN_NAME')
 
-
-# Application definition
+#! Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -101,10 +108,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'home.wsgi.application'
 
 
-# Database
+#! Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -116,7 +121,7 @@ DATABASES = {
     }
 }
 
-
+#! Caches
 REDIS_HOST = env('REDIS_HOST')
 REDIS_PORT = env('REDIS_PORT')
 
@@ -130,7 +135,7 @@ CACHES = {
     }
 }
 
-# Password validation
+#! Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -148,7 +153,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# USERS
+#! USERS
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/user/login/'
 LOGOUT_URL = '/user/logout/'
@@ -156,7 +161,7 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 
-# Internationalization
+#! Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
@@ -168,7 +173,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+#! Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
@@ -179,6 +184,16 @@ if DEBUG:
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# ! Email
+EMAIL_HOST =env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = env('EMAIL_USE_SSL')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER
 
 
 # Default primary key field type

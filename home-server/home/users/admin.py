@@ -1,8 +1,10 @@
 from django.contrib import admin
 
 from orders.admin import OrderAdminTab
-from users.models import User
+from users.models import User, EmailVerification
 from carts.admin import CartTabAdmin
+
+admin.site.register(EmailVerification)
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):

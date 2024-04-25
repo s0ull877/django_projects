@@ -1,17 +1,20 @@
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
-from django.shortcuts import render
-from django.views.generic.edit import CreateView, UpdateView
-
-from django.contrib.auth import login as auth_login
+from django.contrib import messages
 from django.contrib.auth.views import LoginView
+from django.contrib.auth import login as auth_login
 from django.contrib.messages.views import SuccessMessageMixin
 
 from django.urls import reverse_lazy
+from django.shortcuts import redirect, render
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 
-from carts.models import HomeCart
+from django.views.generic.edit import CreateView, UpdateView
+
 from common.views import TitleMixin
 from users.forms import UserLoginForm, UserProfileForm, UserRegistrationForm
-from users.models import User
+
+from carts.models import HomeCart
+from users.models import User, EmailVerification
+from carts.models import HomeCart
 
 
 
@@ -83,9 +86,36 @@ class UserRegistrationView(SuccessMessageMixin, TitleMixin, CreateView):
 
 
 
+
+
 def cart_page(request):
 
     context = {'title': 'Home - Корзина'}
 
     return HttpResponse(render(request, 'carts/user_basket.html', context))
 
+
+def email_verification_view(request, email, code):
+    
+    if request.method == 'GET':
+
+        user = User.objects.get(email=email)
+        verification = EmailVerification.objects.get(code=code)
+        if verification.is_expired() or not verification.active:
+
+            messages.warning(request, 'Данная ссылка неактивна!')
+            return redirect('main:index')
+        
+        else:
+
+            session_key = request.session.session_key
+            auth_login(request, user)
+
+            verification.active = False
+            verification.save()
+
+            if session_key:
+                HomeCart.objects.filter(session_key=session_key).update(user=user)
+
+            messages.success(request, 'Ваша почта верифицирована!')
+            return redirect('main:index')
