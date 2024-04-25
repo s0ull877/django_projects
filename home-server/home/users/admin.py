@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from orders.admin import OrderAdminTab
 from users.models import User
 from carts.admin import CartTabAdmin
 
@@ -23,5 +24,5 @@ class UserAdmin(admin.ModelAdmin):
 
     readonly_fields = ['username', 'email', 'date_joined']
 
-    inlines = [CartTabAdmin,]
+    inlines = [CartTabAdmin,OrderAdminTab]
 
