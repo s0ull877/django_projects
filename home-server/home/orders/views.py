@@ -67,8 +67,8 @@ def create_order(request):
             return render(request, 'orders/create_order.html', context)
 
 
-            
-    else:
+        
+    elif request.method == 'GET':
 
         if not user_carts.exists():
             
