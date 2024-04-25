@@ -74,7 +74,7 @@ def create_order(request):
             
             messages.warning(request, f"Вы не можете оформить заказ, пока корзина пуста!")
 
-            return redirect(to='goods:catalog', kwargs={'slug':'all'})
+            return redirect(to='goods:catalog', slug='all')
 
         
         else:

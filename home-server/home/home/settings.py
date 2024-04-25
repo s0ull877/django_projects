@@ -31,6 +31,9 @@ env = environ.Env(
     DATABASE_HOST=(str),
     DATABASE_PORT=(str),
 
+    REDIS_HOST=(str),
+    REDIS_PORT=(str),
+
 )
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -113,6 +116,19 @@ DATABASES = {
     }
 }
 
+
+REDIS_HOST = env('REDIS_HOST')
+REDIS_PORT = env('REDIS_PORT')
+
+CACHES = {
+    'default': {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/1',
+        # 'OPTIONS': {
+        #     'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        # }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
