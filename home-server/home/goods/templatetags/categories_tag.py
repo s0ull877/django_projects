@@ -14,5 +14,7 @@ def categories_tag():
 
             categories = Categories.objects.all() 
             cache.set('categories',  categories, 60)
+            return categories
+
         else:
             return categories

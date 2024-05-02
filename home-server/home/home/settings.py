@@ -41,6 +41,8 @@ env = environ.Env(
     EMAIL_HOST_PASSWORD=(str),
     EMAIL_USE_SSL=(bool),
 
+    YOKASSA_SECRET=str,
+    YOKASSA_ACC_ID=int,
 )
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -200,3 +202,7 @@ EMAIL_ADMIN = EMAIL_HOST_USER
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+YOKASSA_SECRET=env('YOKASSA_SECRET')
+YOKASSA_ACC_ID=env('YOKASSA_ACC_ID')

@@ -21,11 +21,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from main.views import index
+from orders.views import yookassa_webhook_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
+    path('yookassa/webhook/', yookassa_webhook_view),
     path('home/', include('main.urls', namespace='main')),
     path('catalog/', include('goods.urls', namespace='goods')),
     path('user/', include('users.urls', namespace='users')),
