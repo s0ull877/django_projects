@@ -14,22 +14,23 @@ services:
     restart: always
 
 
-  celery:
-    image: celery:4
-    restart: always
-    depends_on: 
-      - redis
-    volumes:
-      - ./celery.conf:/etc/systemd/system/celery.service
-
   web:
     build: ../..
     restart: always
     depends_on:
       - db
-      - celery
     volumes:
-      - static_value:/app/static
+      - store_static_value:/app/static
+    env_file:
+      - ./.env
+
+  celery:
+    build: ../..
+    command: celery worker -A store -l INFO
+    restart: always
+    depends_on:
+      - redis
+      - web
     env_file:
       - ./.env
 
@@ -38,7 +39,7 @@ services:
     image: nginx:1.21.3-alpine
     restart: always
     depends_on:
-      - web 
+      - web
     ports:
       - "80:80"
     volumes:
@@ -46,5 +47,5 @@ services:
       - store_static_value:/var/html/static/
 
 volumes:
-  store_postgres_data:   
-  store_static_value: 
+  store_postgres_data:
+  store_static_value:
